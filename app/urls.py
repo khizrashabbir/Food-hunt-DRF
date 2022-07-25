@@ -1,6 +1,7 @@
 from django.urls import path, include
 from . import views
 from rest_framework import routers
+from .views import GoogleLogin
 
 app_name = "foodhuntapis"
 
@@ -13,6 +14,7 @@ router.register('api/v1/reviews', views.Review,)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('api/v1/book-table/', views.BookTableView.as_view())
+    path('api/v1/book-table/', views.BookTableView.as_view()),
+    path('dj-rest-auth/google/', GoogleLogin.as_view(), name='google_login'),
 
 ]

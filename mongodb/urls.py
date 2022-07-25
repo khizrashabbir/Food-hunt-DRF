@@ -14,9 +14,39 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
+from django.urls import re_path as url
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+from django.utils.translation import gettext_lazy as _
+from django.utils.encoding import force_str as force_text
+
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Test API",
+      default_version='v1',
+      description="Test description",
+      terms_of_service="https://www.google.com/policies/terms/",
+      contact=openapi.Contact(email="testing@api.com"),
+      license=openapi.License(name="BSD License"),
+   ),
+   public=True,
+   permission_classes=(permissions.AllowAny,),
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('app.urls'))
+    path('', include('app.urls')),
+    url('api-auth/', include('rest_framework.urls')),
+    # url(r'rest-auth/', include('rest_auth.urls')),
+    # path(r'rest-auth/registration/', include('rest_auth.registration.urls')),
+    path(r'api-info/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path(r'docs/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('dj-rest-auth/', include('dj_rest_auth.urls')),
+    path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
+    path('accounts/', include('allauth.urls')),
+    path('dj-rest-auth/', include('dj_rest_auth.urls')),
+
 ]
