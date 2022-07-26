@@ -10,10 +10,11 @@ from django.conf import settings
 # Create your views here.
 
 class GoogleLogin(SocialLoginView):
-    authentication_classes = [] # disable authentication
+    # authentication_classes = [] # disable authentication
     adapter_class = GoogleOAuth2Adapter
+    callback_url = 'http://localhost:8000/accounts/google/login/callback/'
     # callback_url = "http://localhost:3000"
-    client_class = OAuth2Client
+    # client_class = OAuth2Client
 
 
 class MenuView(viewsets.ModelViewSet):

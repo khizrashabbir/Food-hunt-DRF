@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_authtoken',
     'rest_auth',
-    'django.contrib.sites',
+    # 'django.contrib.sites',
     # 'rest_auth.registration',
 
     'dj_rest_auth',
@@ -54,10 +54,11 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.twitter',
     'allauth.socialaccount.providers.google',
     'drf_yasg',
+    'rest_framework_simplejwt',
 
 ]
 
-# SITE_ID = 1
+SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -101,11 +102,15 @@ WSGI_APPLICATION = 'mongodb.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'djongo',
+    #     'NAME': 'mongop',
+    #     'HOST': '127.0.0.1',
+    #     'PORT': 27017,
+    # }
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'mongop',
-        'HOST': '127.0.0.1',
-        'PORT': 27017,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -164,6 +169,8 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
         "dj_rest_auth.utils.JWTCookieAuthentication",
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+
     ],
 }
 REST_USE_JWT = True
@@ -177,8 +184,8 @@ SOCIALACCOUNT_PROVIDERS = {
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         'APP': {
-            'client_id': '123',
-            'secret': '456',
+            'client_id': '83977446944-e0r4f12bd9u17qqovtm74m2ffhcm4dcd.apps.googleusercontent.com',
+            'secret': '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',
             'key': ''
         }
     }
